@@ -7,3 +7,8 @@ git log 						--liste des commit
 git pull            			--récuperer l'information distante.
 git branch						--créer une nouvelle branche sur le projet courant.
 git checkout nom-de-la-branche  --revenir a la branche "nom de la branche"
+
+Si dans l'editeur vim : :wq quitte l'éditeur.
+
+git merge nom-de-la-branche-a-merger --note: faire ca depuis la branche pricipale / qu'on veut merger.
+git blame -qui a modifie quoi
