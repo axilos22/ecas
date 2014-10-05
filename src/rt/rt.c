@@ -1,5 +1,6 @@
 #include "rt.h"
 
+static u16 x_acquis, theta_acquis;
 
 void tacheP1(long arg) {
 	int commanden boucle=0;
@@ -29,7 +30,7 @@ void tacheP1(long arg) {
 int setGrandeur(Conversion conv) {
     #IF CONF == 1
         if(conv.channel == 0){
-            x_acquis = conv.value
+            x_acquis = conv.value;
         }
         if(conv.channel == 1) {
             theta_acquis = conv.value;
@@ -59,20 +60,6 @@ void acquisition(long arg) {
 		rt_task_wait_period();
 	}
 }
-/*
-void tacheP2(long arg) {
-	u16 	valueOut = 0;
-	int boucle = 0;
-	init3718();
-	while(boucle<10) {
-		startConv();
-		valueOut = readAD();
-		printk("Value back : %d\n",valueOut);
-		sendU16(valueOut,16);
-		boucle++;
-		rt_task_wait_period();
-	}
-}*/
 
 int rt_start(void) {
 
@@ -87,8 +74,7 @@ int rt_start(void) {
 	now = rt_get_time();
 
 	rt_task_make_periodic(&tache1, now, nano2count(PERIODE));
-/*	rt_task_make_periodic(&tache2, now+nano2count(6000000), nano2count(PERIODE));*/
-	/*rt_task_make_periodic(&tache2, now, nano2count(PERIODE));*/
+    /*rt_task_make_periodic(&tache2, now+nano2count(6000000), nano2count(PERIODE));*/
 	enableOutput();
  return(0);
 

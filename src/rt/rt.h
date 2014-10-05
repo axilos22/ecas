@@ -33,8 +33,6 @@
 /*static RT_TASK tache1, tache2;*/
 static RT_TASK tache1;
 
-static u16 x_acquis, theta_acquis;
-
 int setGrandeur(Conversion conv);
 
 /* Utiliser les float RT TAST INIT*/
