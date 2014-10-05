@@ -1,0 +1,18 @@
+#include <linux/init.h>
+#include <linux/module.h>
+
+#include <asm/io.h>
+#include <asm/irq.h>
+#include <linux/pci.h>
+#include <rtai.h>
+#include <rtai_sched.h>
+#include <rtai_fifos.h>
+
+MODULE_LICENSE("GPL");
+
+/*
+#define STACK_SIZE  2000
+#define PRIORITE 1
+#define TICK_PERIOD 1000000    //  1 ms
+#define PERIODE_CONTROL 20000000 //20ms
+*/

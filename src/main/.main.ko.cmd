@@ -1,0 +1,1 @@
+cmd_/home/rtai/Desktop/ecas_jeanne-arrachidi-tran/src/main/main.ko := i386-linux-ld -m elf_i386 -m elf_i386 -r -o /home/rtai/Desktop/ecas_jeanne-arrachidi-tran/src/main/main.ko /home/rtai/Desktop/ecas_jeanne-arrachidi-tran/src/main/main.o /home/rtai/Desktop/ecas_jeanne-arrachidi-tran/src/main/main.mod.o
