@@ -33,6 +33,6 @@
 /*static RT_TASK tache1, tache2;*/
 static RT_TASK tache1;
 
-int setGrandeur(Conversion conv);
+void setGrandeur(Conversion conv);
 
 /* Utiliser les float RT TAST INIT*/

@@ -34,8 +34,8 @@ static float _x5chap= 0.0;
 static int commande_ajile = 0.0;
 
 int calcul(int pos_ajile, int theta_ajile) {		
-	y1_pos_m  = (float) ((pos_ajile-2048.0)*.5)/2048.0;
-	y2_theta_rad =(float) ((theta_ajile-2048.0)*3)/2048.0;
+	y1_pos_m  =  ((pos_ajile-2048.0)*.5)/2048.0;
+	y2_theta_rad = ((theta_ajile-2048.0)*3.0)/2048.0;
 
 	// ATTENTION: SECURITE A NE PAS SUPPRIMER
 	/*if (((y2_theta_rad>2.8)||(y2_theta_rad<-2.8))) {
@@ -43,6 +43,10 @@ int calcul(int pos_ajile, int theta_ajile) {
 		printk("securite verouille\n");
 		return commande_ajile;			
 	}*/
+	/*
+	printk("y1_pos_m = %f\n",y1_pos_m);
+	printk("y2_theta_rad = %f\n",y2_theta_rad);
+	*/
 		
 	_x1chap = S[0][0]*x1chap + S[0][1]* x2chap + S[0][2]*x3chap + S[0][3]*x4chap +  S[0][4]*theta_angle + S[0][5]*pos_metre ;
 	_x2chap = S[1][0]*x1chap + S[1][1]* x2chap + S[1][2]*x3chap + S[1][3]*x4chap +  S[1][4]*theta_angle + S[1][5]*pos_metre ;
@@ -51,9 +55,6 @@ int calcul(int pos_ajile, int theta_ajile) {
 
 	/*commande = -(S[4][0]*(x1chap)+ S[4][1]*x2chap + S[4][2]*x3chap + S[4][3]*x4chap);*/
 	commande = S[4][0]*(x1chap)+ S[4][1]*x2chap + S[4][2]*x3chap + S[4][3]*x4chap;
-	printk("Cmd = %d",(int)commande);
-	
-	printk("xChap1 = %d , Xchap2 = %d",(int)x1chap,(int)x2chap);
 		
 	x1chap=_x1chap;
 	x2chap=_x2chap;
@@ -72,6 +73,7 @@ int calcul(int pos_ajile, int theta_ajile) {
 	commande_ajile = (int) ((commande + 10) * 4096.0) / 20.0;
 	//commande_ajile = (int) (((commande)/10)+1)*2048;
 		
+	printk("cmd ajile = %d\n",commande_ajile);
 	return commande_ajile;
 }
 

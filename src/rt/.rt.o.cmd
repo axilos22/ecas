@@ -1,9 +1,9 @@
-cmd_/home/rtai/ecas_jeanne-arrachidi-tran/src/rt/rt.o :=  i386-linux-gcc -m32 -Wp,-MD,/home/rtai/ecas_jeanne-arrachidi-tran/src/rt/.rt.o.d  -nostdinc -isystem /usr/lib/arcom/bin/../lib/gcc/i386-linux/3.4.4/include -D__KERNEL__ -Iinclude  -include include/linux/autoconf.h -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -ffreestanding -Os     -fomit-frame-pointer -pipe -msoft-float -mpreferred-stack-boundary=2 -fno-unit-at-a-time  -Iinclude/asm-i386/mach-default -Wdeclaration-after-statement  -I/usr/lib/arcom/realtime/include -Wall -ffast-math -mhard-float  -DMODULE -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(rt)"  -D"KBUILD_MODNAME=KBUILD_STR(rt)" -c -o /home/rtai/ecas_jeanne-arrachidi-tran/src/rt/rt.o /home/rtai/ecas_jeanne-arrachidi-tran/src/rt/rt.c
+cmd_/home/rtai/ecas-master/src/rt/rt.o :=  i386-linux-gcc -m32 -Wp,-MD,/home/rtai/ecas-master/src/rt/.rt.o.d  -nostdinc -isystem /usr/lib/arcom/bin/../lib/gcc/i386-linux/3.4.4/include -D__KERNEL__ -Iinclude  -include include/linux/autoconf.h -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -ffreestanding -Os     -fomit-frame-pointer -pipe -msoft-float -mpreferred-stack-boundary=2 -fno-unit-at-a-time  -Iinclude/asm-i386/mach-default -Wdeclaration-after-statement  -I/usr/lib/arcom/realtime/include -Wall -ffast-math -mhard-float  -DMODULE -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(rt)"  -D"KBUILD_MODNAME=KBUILD_STR(rt)" -c -o /home/rtai/ecas-master/src/rt/rt.o /home/rtai/ecas-master/src/rt/rt.c
 
-deps_/home/rtai/ecas_jeanne-arrachidi-tran/src/rt/rt.o := \
-  /home/rtai/ecas_jeanne-arrachidi-tran/src/rt/rt.c \
-  /home/rtai/ecas_jeanne-arrachidi-tran/src/rt/rt.h \
-  /home/rtai/ecas_jeanne-arrachidi-tran/src/rt/../lib/rtai.h \
+deps_/home/rtai/ecas-master/src/rt/rt.o := \
+  /home/rtai/ecas-master/src/rt/rt.c \
+  /home/rtai/ecas-master/src/rt/rt.h \
+  /home/rtai/ecas-master/src/rt/../lib/rtai.h \
   include/linux/init.h \
     $(wildcard include/config/modules.h) \
     $(wildcard include/config/hotplug.h) \
@@ -458,10 +458,10 @@ deps_/home/rtai/ecas_jeanne-arrachidi-tran/src/rt/rt.o := \
     $(wildcard include/config/vt.h) \
   /usr/lib/arcom/realtime/include/rtai_sched.h \
   /usr/lib/arcom/realtime/include/rtai_fifos.h \
-  /home/rtai/ecas_jeanne-arrachidi-tran/src/rt/../pcm_3718/pcm_3718.h \
-  /home/rtai/ecas_jeanne-arrachidi-tran/src/rt/../acq_3712/acq_3712.h \
-  /home/rtai/ecas_jeanne-arrachidi-tran/src/rt/../commande/commande.h \
+  /home/rtai/ecas-master/src/rt/../pcm_3718/pcm_3718.h \
+  /home/rtai/ecas-master/src/rt/../acq_3712/acq_3712.h \
+  /home/rtai/ecas-master/src/rt/../commande/commande.h \
 
-/home/rtai/ecas_jeanne-arrachidi-tran/src/rt/rt.o: $(deps_/home/rtai/ecas_jeanne-arrachidi-tran/src/rt/rt.o)
+/home/rtai/ecas-master/src/rt/rt.o: $(deps_/home/rtai/ecas-master/src/rt/rt.o)
 
-$(deps_/home/rtai/ecas_jeanne-arrachidi-tran/src/rt/rt.o):
+$(deps_/home/rtai/ecas-master/src/rt/rt.o):

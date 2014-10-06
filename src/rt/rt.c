@@ -3,11 +3,10 @@
 static u16 x_acquis, theta_acquis;
 
 void tacheP1(long arg) {
-	int commanden boucle=0;
-	u16 test;
+	int commande, boucle=0;
 	Conversion conv;
 	printk("Debut de la sequence ------------------------------------------------\n");
-	while(1) {
+	while(boucle<5) {
 			setChannelScan(0,1);
 			startConv();
 			rt_busy_sleep(100000);
@@ -20,24 +19,24 @@ void tacheP1(long arg) {
 			printk("[%d]chan%d = %d\n",boucle,conv.channel,conv.value);
 			setGrandeur(conv);
             commande = calcul(x_acquis,theta_acquis);
-            printk("[%d]Commande : %d\n",boucle,commande);
+            /*printk("[%d]Commande : %d\n",boucle,commande);*/
             setValue(commande,0);
             boucle++;
             rt_task_wait_period();
 		}
 }
 
-int setGrandeur(Conversion conv) {
-    #IF CONF == 1
+void setGrandeur(Conversion conv) {
+    #if (CONF == 1)
         if(conv.channel == 0){
             x_acquis = conv.value;
         }
         if(conv.channel == 1) {
             theta_acquis = conv.value;
         }
-    #ELSE
+    #else
         if(conv.channel == 1){
-            x_acquis = conv.value
+            x_acquis = conv.value;
         }
         if(conv.channel == 0) {
             theta_acquis = conv.value;
