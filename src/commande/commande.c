@@ -4,7 +4,7 @@
 /*static int NbBitsDAC=12;*/
 /*static int NON_DEFINI=1;*/
 
-static float S[5][6] = {
+static double S[5][6] = {
 		{   0.6300,    0.1206,   -0.0008,    0.0086,    0.3658,   0.1200    },
 	    {	-.0953,    .6935,    .0107,    .0012,   .0993,    .3070    },
 	    {   -.2896,   -1.9184,    1.1306,    .2351,   1.0887,    2.0141   },
@@ -12,48 +12,47 @@ static float S[5][6] = {
 	    {  -80.3092,   -9.6237,  -14.1215,  -23.6260,         0,         0	}
 	};
 
-static float y1_pos_m = 0.0;
-static float y2_theta_rad = 0.0;
+static double y1_pos_m = 0.0;
+static double y1_pos_V = 0.0;
+static double y2_theta_rad = 0.0;
+static double y2_theta_V = 0.0;
 
-static float pos_metre= 0.0;
-static float theta_angle= 0.0;
+static double commande= 0.0;
+static double x1chap= 0.0;
+static double x2chap= 0.0;
+static double x3chap= 0.0;
+static double x4chap= 0.0;
+static double x5chap= 0.0;
 
-static float commande= 0.0;
-static float x1chap= 0.0;
-static float x2chap= 0.0;
-static float x3chap= 0.0;
-static float x4chap= 0.0;
-static float x5chap= 0.0;
+static double _x1chap= 0.0;
+static double _x2chap= 0.0;
+static double _x3chap= 0.0;
+static double _x4chap= 0.0;
+static double _x5chap= 0.0;  
 
-static float _x1chap= 0.0;
-static float _x2chap= 0.0;
-static float _x3chap= 0.0;
-static float _x4chap= 0.0;
-static float _x5chap= 0.0;  
-
-static int commande_ajile = 0.0;
+static int commande_ajile = 0;
 
 int calcul(int pos_ajile, int theta_ajile) {		
-	y1_pos_m  =  ((pos_ajile-2048.0)*.5)/2048.0;
-	y2_theta_rad = ((theta_ajile-2048.0)*3.0)/2048.0;
+	/*y1_pos_m  =  ((pos_ajile-2048.0)*.46)/2048.0;*/
+	y1_pos_V = (((pos_ajile-1.0)*10.0)/2048.0);
+	/*y1_pos_m = ((y1_pos_V*0.46)/10.0);*/
+	y1_pos_m = ((y1_pos_V*0.46/10.0));
+	/* y2_theta_rad = ((theta_ajile-2048.0)*0.3)/2048.0; */
+	/* y2_theta_V = (((theta_ajile/2048.0)-1)*3.5); -3.5/3.5  */
+	y2_theta_V = ((theta_ajile-1.0)*5.0)/2048.0; /* +5/-5 */
+	y2_theta_rad = ((y2_theta_V*0.3)/5.0);
 
-	// ATTENTION: SECURITE A NE PAS SUPPRIMER
-	/*if (((y2_theta_rad>2.8)||(y2_theta_rad<-2.8))) {
-		commande_ajile = 2048; // 0 Volt
-		printk("securite verouille\n");
+	/* ATTENTION: SECURITE A NE PAS SUPPRIMER */
+	if (((y2_theta_rad>0.24)||(y2_theta_rad<-0.24))) {
+		commande_ajile = 2048;
 		return commande_ajile;			
-	}*/
-	/*
-	printk("y1_pos_m = %f\n",y1_pos_m);
-	printk("y2_theta_rad = %f\n",y2_theta_rad);
-	*/
+	}
 		
-	_x1chap = S[0][0]*x1chap + S[0][1]* x2chap + S[0][2]*x3chap + S[0][3]*x4chap +  S[0][4]*theta_angle + S[0][5]*pos_metre ;
-	_x2chap = S[1][0]*x1chap + S[1][1]* x2chap + S[1][2]*x3chap + S[1][3]*x4chap +  S[1][4]*theta_angle + S[1][5]*pos_metre ;
-	_x3chap = S[2][0]*x1chap + S[2][1]* x2chap + S[2][2]*x3chap + S[2][3]*x4chap +  S[2][4]*theta_angle + S[2][5]*pos_metre ;
-	_x4chap = S[3][0]*x1chap + S[3][1]* x2chap + S[3][2]*x3chap + S[3][3]*x4chap +  S[3][4]*theta_angle + S[3][5]*pos_metre ;
+	_x1chap = S[0][0]*x1chap + S[0][1]* x2chap + S[0][2]*x3chap + S[0][3]*x4chap +  S[0][4]*y2_theta_rad + S[0][5]*y1_pos_m ;
+	_x2chap = S[1][0]*x1chap + S[1][1]* x2chap + S[1][2]*x3chap + S[1][3]*x4chap +  S[1][4]*y2_theta_rad + S[1][5]*y1_pos_m ;
+	_x3chap = S[2][0]*x1chap + S[2][1]* x2chap + S[2][2]*x3chap + S[2][3]*x4chap +  S[2][4]*y2_theta_rad + S[2][5]*y1_pos_m ;
+	_x4chap = S[3][0]*x1chap + S[3][1]* x2chap + S[3][2]*x3chap + S[3][3]*x4chap +  S[3][4]*y2_theta_rad + S[3][5]*y1_pos_m ;
 
-	/*commande = -(S[4][0]*(x1chap)+ S[4][1]*x2chap + S[4][2]*x3chap + S[4][3]*x4chap);*/
 	commande = S[4][0]*(x1chap)+ S[4][1]*x2chap + S[4][2]*x3chap + S[4][3]*x4chap;
 		
 	x1chap=_x1chap;
@@ -70,10 +69,7 @@ int calcul(int pos_ajile, int theta_ajile) {
 		commande=VOLT_MIN;} 
 	
 	/* Format fonctionnel */
-	commande_ajile = (int) ((commande + 10) * 4096.0) / 20.0;
-	//commande_ajile = (int) (((commande)/10)+1)*2048;
-		
-	printk("cmd ajile = %d\n",commande_ajile);
+	commande_ajile = (int) ((commande + 10) * 4096) / 20;		
 	return commande_ajile;
 }
 

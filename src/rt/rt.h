@@ -23,7 +23,8 @@
 /* define pour gestion tache periodique */
 #define STACK_SIZE  2000
 #define TICK_PERIOD 1000000    //  1 ms
-#define PERIODE 10000000 //10ms
+/*#define PERIODE 10000000 //10ms*/
+#define PERIODE 1000000
 #define N_BOUCLE 10000000
 #define NUMERO 1
 #define PRIORITE 1

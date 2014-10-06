@@ -6,7 +6,7 @@ void tacheP1(long arg) {
 	int commande, boucle=0;
 	Conversion conv;
 	printk("Debut de la sequence ------------------------------------------------\n");
-	while(boucle<5) {
+	while(boucle<10000) {
 			setChannelScan(0,1);
 			startConv();
 			rt_busy_sleep(100000);

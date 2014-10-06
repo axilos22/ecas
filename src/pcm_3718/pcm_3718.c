@@ -21,8 +21,9 @@ This function set the 3718 in a ready state in order to do a A/D Conversion.
 @return 0 if all clear.
 */
 int init3718(void) {
-    int channel = 0, range = 1010;
-    for(channel=0;channel<PHYSICAL_CHANNEL;channel++) {
+    int channel = 0, range = 1010, range2 = 55;
+    ADRangeSelect(channel,range2);
+    for(channel=1;channel<PHYSICAL_CHANNEL;channel++) {
         ADRangeSelect(channel,range);
     }
 	/* CR1 = no interrupt, no DMAE, Software trigger
