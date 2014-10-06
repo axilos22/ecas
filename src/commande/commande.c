@@ -12,35 +12,30 @@ static float S[5][6] = {
 	    {  -80.3092,   -9.6237,  -14.1215,  -23.6260,         0,         0	}
 	};
 
-static float y1_pos_m=0;
-static float y2_theta_rad=0;
+static float y1_pos_m = 0.0;
+static float y2_theta_rad = 0.0;
 
-static float pos_metre=0;
-static float theta_angle=0;
+static float pos_metre= 0.0;
+static float theta_angle= 0.0;
 
-static float commande=0;
-static float x1chap=0;
-static float x2chap=0;
-static float x3chap=0;
-static float x4chap=0;
-static float x5chap=0;
+static float commande= 0.0;
+static float x1chap= 0.0;
+static float x2chap= 0.0;
+static float x3chap= 0.0;
+static float x4chap= 0.0;
+static float x5chap= 0.0;
 
-static float _x1chap=0;
-static float _x2chap=0;
-static float _x3chap=0;
-static float _x4chap=0;
-static float _x5chap=0;  
+static float _x1chap= 0.0;
+static float _x2chap= 0.0;
+static float _x3chap= 0.0;
+static float _x4chap= 0.0;
+static float _x5chap= 0.0;  
 
-static int commande_ajile;
+static int commande_ajile = 0.0;
 
 int calcul(int pos_ajile, int theta_ajile) {		
-	y1_pos_m  = (float) ((pos_ajile-2048)*.5)/2048;
-	y2_theta_rad =(float) ((theta_ajile-2048)*3)/2048;
-	/*y1_pos_m  = (float) ((pos_ajile/4096.0)-.5)*2;  +1 / -1*/ 
-	/*y2_theta_rad =(float) ((theta_ajile/4096.0)-.5)*2;  +1 / -1*/
-	
-	//y1_pos_m = y1_pos_m*1;
-	//y2_theta_rad = y2_theta_rad*.35;
+	y1_pos_m  = (float) ((pos_ajile-2048.0)*.5)/2048.0;
+	y2_theta_rad =(float) ((theta_ajile-2048.0)*3)/2048.0;
 
 	// ATTENTION: SECURITE A NE PAS SUPPRIMER
 	/*if (((y2_theta_rad>2.8)||(y2_theta_rad<-2.8))) {
@@ -54,7 +49,8 @@ int calcul(int pos_ajile, int theta_ajile) {
 	_x3chap = S[2][0]*x1chap + S[2][1]* x2chap + S[2][2]*x3chap + S[2][3]*x4chap +  S[2][4]*theta_angle + S[2][5]*pos_metre ;
 	_x4chap = S[3][0]*x1chap + S[3][1]* x2chap + S[3][2]*x3chap + S[3][3]*x4chap +  S[3][4]*theta_angle + S[3][5]*pos_metre ;
 
-	commande = -(S[4][0]*(x1chap)+ S[4][1]*x2chap + S[4][2]*x3chap + S[4][3]*x4chap);
+	/*commande = -(S[4][0]*(x1chap)+ S[4][1]*x2chap + S[4][2]*x3chap + S[4][3]*x4chap);*/
+	commande = S[4][0]*(x1chap)+ S[4][1]*x2chap + S[4][2]*x3chap + S[4][3]*x4chap;
 	printk("Cmd = %d",(int)commande);
 	
 	printk("xChap1 = %d , Xchap2 = %d",(int)x1chap,(int)x2chap);
@@ -66,14 +62,14 @@ int calcul(int pos_ajile, int theta_ajile) {
 	x5chap=_x5chap;
 
 	if(commande > VOLT_MAX) {
-		printk("Maximum atteint\n");
+		/*printk("Maximum atteint\n");*/
 		commande=VOLT_MAX;}
 	if(commande < VOLT_MIN) {
-		printk("Minimum atteint\n");
+		/*printk("Minimum atteint\n");*/
 		commande=VOLT_MIN;} 
 	
 	/* Format fonctionnel */
-	commande_ajile = ((commande + 10) * 4096) / 20;
+	commande_ajile = (int) ((commande + 10) * 4096.0) / 20.0;
 	//commande_ajile = (int) (((commande)/10)+1)*2048;
 		
 	return commande_ajile;

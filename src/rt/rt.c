@@ -46,17 +46,20 @@ int setGrandeur(Conversion conv) {
 }
 
 /*
- * tache d'acquisistion periodique sur les channel 0 et 1
- * */
+ * tache d'acquisistion periodique sur les channel 0 et 1 
+ */
 void acquisition(long arg) {
+	Conversion conv;
 	while(1) {
 		setChannel(0);
 		startConv();
-		x_acquis = readAD();
+		conv = readConv();
+		setGrandeur(conv);
 		rt_task_wait_period();
 		setChannel(1);
 		startConv();
-		theta_acquis = readAD();
+		conv = readConv();
+		setGrandeur(conv);
 		rt_task_wait_period();
 	}
 }
