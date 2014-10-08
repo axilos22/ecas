@@ -1,5 +1,5 @@
- #define VOLT_MAX 9.5
- #define VOLT_MIN -9.5
+ #define VOLT_MAX 10
+ #define VOLT_MIN -10
 
 #ifndef MAIN
 	#include "../lib/rtai.h" 
@@ -7,4 +7,3 @@
 
 /* functions */
 int calcul(int pos_ajile, int theta_ajile);
-int test_comm(int x,int theta);

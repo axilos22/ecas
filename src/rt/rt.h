@@ -6,7 +6,7 @@
 
 /*Config - 1 thetha gauche / x droite
  * 		 - 2 thetha droite / x gauche */
-#define CONF 2
+//#define CONF 2
 
 /*Include for CAN */
 /*#include	"../can/can.h"*/
@@ -24,15 +24,15 @@
 #define STACK_SIZE  2000
 #define TICK_PERIOD 1000000    //  1 ms
 /*#define PERIODE 10000000 //10ms*/
-#define PERIODE 1000000
+#define PERIODE 10000000
+#define PERIODE_ACQ 500000
 #define N_BOUCLE 10000000
 #define NUMERO 1
 #define PRIORITE 1
 #define USE_FLOAT 1
 
-/*declaration de taches */
-/*static RT_TASK tache1, tache2;*/
-static RT_TASK tache1;
+/* Declaration de taches */
+static RT_TASK tache1, tache2;
 
 void setGrandeur(Conversion conv);
 

@@ -1,2 +1,2 @@
-/home/rtai/ecas_jeanne-arrachidi-tran/src/pcm_3718/pcm_3718.ko
-/home/rtai/ecas_jeanne-arrachidi-tran/src/pcm_3718/pcm_3718.o
+/home/rtai/ecas-master/src/pcm_3718/pcm_3718.ko
+/home/rtai/ecas-master/src/pcm_3718/pcm_3718.o
