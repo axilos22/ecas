@@ -18,12 +18,14 @@ void pcm_stop(void) {
 /*
 Initialization function of the 3718.
 This function set the 3718 in a ready state in order to do a A/D Conversion.
+Channel 0 : -5v/+5V
+Others : -10/+10
 @return 0 if all clear.
 */
 int init3718(void) {
-    int channel = 0, range = 1010, range2 = 55;
-    ADRangeSelect(channel,range2);
-    for(channel=1;channel<PHYSICAL_CHANNEL;channel++) {
+    int channel = 1, range = 1010;
+    ADRangeSelect(0,55);/* Met le channel 0 sur +5/-5 */
+    for(channel=1;channel<PHYSICAL_CHANNEL;channel++) { /* Met les autres channels à +10/-10 */
         ADRangeSelect(channel,range);
     }
 	/* CR1 = no interrupt, no DMAE, Software trigger

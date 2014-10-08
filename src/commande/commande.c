@@ -1,9 +1,5 @@
 #include "commande.h"
 
-/*static int NbBitsADC=12;*/
-/*static int NbBitsDAC=12;*/
-/*static int NON_DEFINI=1;*/
-
 static double S[5][6] = {
 		{   0.6300,    0.1206,   -0.0008,    0.0086,    0.3658,   0.1200    },
 	    {	-.0953,    .6935,    .0107,    .0012,   .0993,    .3070    },
@@ -33,19 +29,16 @@ static double _x5chap= 0.0;
 static int commande_ajile = 0;
 
 int calcul(int pos_ajile, int theta_ajile) {		
-	/*y1_pos_m  =  ((pos_ajile-2048.0)*.46)/2048.0;*/
 	y1_pos_V = (((pos_ajile-1.0)*10.0)/2048.0);
-	/*y1_pos_m = ((y1_pos_V*0.46)/10.0);*/
 	y1_pos_m = ((y1_pos_V*0.46/10.0));
-	/* y2_theta_rad = ((theta_ajile-2048.0)*0.3)/2048.0; */
-	/* y2_theta_V = (((theta_ajile/2048.0)-1)*3.5); -3.5/3.5  */
+
 	y2_theta_V = ((theta_ajile-1.0)*5.0)/2048.0; /* +5/-5 */
 	y2_theta_rad = ((y2_theta_V*0.3)/5.0);
 
 	/* ATTENTION: SECURITE A NE PAS SUPPRIMER */
-	if (((y2_theta_rad>0.24)||(y2_theta_rad<-0.24))) {
+	if (((y2_theta_V > 4.5)||(y2_theta_V < -4.5))) {
 		commande_ajile = 2048;
-		return commande_ajile;			
+		return commande_ajile;
 	}
 		
 	_x1chap = S[0][0]*x1chap + S[0][1]* x2chap + S[0][2]*x3chap + S[0][3]*x4chap +  S[0][4]*y2_theta_rad + S[0][5]*y1_pos_m ;
@@ -61,20 +54,12 @@ int calcul(int pos_ajile, int theta_ajile) {
 	x4chap=_x4chap;
 	x5chap=_x5chap;
 
-	if(commande > VOLT_MAX) {
-		/*printk("Maximum atteint\n");*/
-		commande=VOLT_MAX;}
-	if(commande < VOLT_MIN) {
-		/*printk("Minimum atteint\n");*/
-		commande=VOLT_MIN;} 
+	if(commande > VOLT_MAX) {commande=VOLT_MAX;}
+	if(commande < VOLT_MIN) {commande=VOLT_MIN;} 
 	
 	/* Format fonctionnel */
 	commande_ajile = (int) ((commande + 10) * 4096) / 20;		
 	return commande_ajile;
-}
-
-int test_comm(int x,int theta) {
-	return calcul(x,theta);
 }
 
 int start_com(void) {

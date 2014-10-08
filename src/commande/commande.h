@@ -7,4 +7,3 @@
 
 /* functions */
 int calcul(int pos_ajile, int theta_ajile);
-int test_comm(int x,int theta);
