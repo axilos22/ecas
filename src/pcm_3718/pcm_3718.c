@@ -25,7 +25,7 @@ Others : -10/+10
 int init3718(void) {
     int channel = 1, range = 1010;
     ADRangeSelect(0,55);/* Met le channel 0 sur +5/-5 */
-    for(channel=1;channel<PHYSICAL_CHANNEL;channel++) { /* Met les autres channels à +10/-10 */
+    for(channel=1;channel<PHYSICAL_CHANNEL;channel++) { /* Met les autres channels a +10/-10 */
         ADRangeSelect(channel,range);
     }
 	/* CR1 = no interrupt, no DMAE, Software trigger
