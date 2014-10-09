@@ -4,10 +4,6 @@
     #include "../lib/rtai.h"
 #endif
 
-/*Config - 1 thetha gauche / x droite
- * 		 - 2 thetha droite / x gauche */
-//#define CONF 2
-
 /*Include for CAN */
 /*#include	"../can/can.h"*/
 
@@ -23,9 +19,8 @@
 /* define pour gestion tache periodique */
 #define STACK_SIZE  2000
 #define TICK_PERIOD 1000000    //  1 ms
-/*#define PERIODE 10000000 //10ms*/
-#define PERIODE 10000000
-#define PERIODE_ACQ 500000
+#define PERIODE 10000000    //10ms
+#define PERIODE_ACQ 2000000 //2 ms
 #define N_BOUCLE 10000000
 #define NUMERO 1
 #define PRIORITE 1

@@ -2,63 +2,31 @@
 
 static u16 x_acquis, theta_acquis;
 
-void tacheP1(long arg) {
-	int commande, boucle=0;
-	Conversion conv;
-	printk("Debut de la sequence ------------------------------------------------\n");
-	while(boucle < 10000) {
-			setChannelScan(0,1);
-			startConv();
-			rt_busy_sleep(100000);
-			conv = readConv();
-			/*printk("[%d]chan%d = %d\n",boucle,conv.channel,conv.value);*/
-			setGrandeur(conv);
-			startConv();
-			rt_busy_sleep(100000);
-			conv = readConv();
-			/*printk("[%d]chan%d = %d\n",boucle,conv.channel,conv.value);*/
-			setGrandeur(conv);
-            commande = calcul(x_acquis,theta_acquis);
-            printk("[%d]Commande : %d\n",boucle,commande);
-            setValue(commande,0);
+void cmd_pendule(long arg) {
+	int boucle = 0, commande = 1800;
+	/*while(boucle < 10) {*/
+	while(1) {			
+            /*printk("[%d]\tcmd\tcmd = %u\n",boucle,commande);*/
+            printk("[%d]cmd\tcmd=%d\n",boucle,commande);
+            setValue(calcul(x_acquis,theta_acquis),0);
+            if((theta_acquis>2068)&&(theta_acquis< 2028)) {setValue(2048,0);}
             boucle++;
-            rt_task_wait_period();
+            rt_task_wait_period();       
 		}
 }
-
-void setGrandeur(Conversion conv) {
-    /*#if CONF == 1
-        if(conv.channel == 0){
-            x_acquis = conv.value;
-        }
-        if(conv.channel == 1) {
-            theta_acquis = conv.value;
-        }
-    #else*/
-        if(conv.channel == 1){
-            x_acquis = conv.value;
-        }
-        if(conv.channel == 0) {
-            theta_acquis = conv.value;
-       }/*
-    #endif*/
-}
-
-/*
- * tache d'acquisistion periodique sur les channel 0 et 1 
- */
 void acquisition(long arg) {
-	Conversion conv;
+	int boucle = 0;
+	/*while(boucle < 20) {*/
 	while(1) {
-		setChannel(0);
+		printk("[%d]acq\tx=%d\ttheta=%d\n",boucle,x_acquis,theta_acquis);
 		startConv();
-		conv = readConv();
-		setGrandeur(conv);
+		wait_EOC();
+		setGrandeur(readConv());
 		rt_task_wait_period();
-		setChannel(1);
 		startConv();
-		conv = readConv();
-		setGrandeur(conv);
+		wait_EOC();
+		setGrandeur(readConv());
+		boucle++;
 		rt_task_wait_period();
 	}
 }
@@ -67,19 +35,29 @@ int rt_start(void) {
 
   int ierr;
   RTIME now;
+
+    setChannelScan(0,1);
    /* creation taches periodiques */
 	rt_set_oneshot_mode();
-	ierr = rt_task_init(&tache1,tacheP1,0,STACK_SIZE, PRIORITE, USE_FLOAT, 0);
+	ierr = rt_task_init(&tache1,cmd_pendule,0,STACK_SIZE, PRIORITE, USE_FLOAT, 0);
 	ierr = rt_task_init(&tache2,acquisition,0,STACK_SIZE, PRIORITE, USE_FLOAT, 0);
 
 	start_rt_timer(nano2count(TICK_PERIOD));
 	now = rt_get_time();
-
-	rt_task_make_periodic(&tache1, now+nano2count(6000000), nano2count(PERIODE));
-    rt_task_make_periodic(&tache2, now, nano2count(PERIODE_ACQ));
-	enableOutput();
+	rt_task_make_periodic(&tache1, now+nano2count(50000000), nano2count(PERIODE));	/* 50ms de retard */
+    rt_task_make_periodic(&tache2, now+nano2count(10000000), nano2count(PERIODE_ACQ)); /*10 ms de retard */
  return(0);
 
+}
+/*	theta a gauche : 3521
+*	theta a droite : 549
+*/
+void setGrandeur(Conversion conv) {
+        if(conv.channel == 1){
+            x_acquis = conv.value;
+        }else{
+            theta_acquis = conv.value;
+        }
 }
 
 void rt_stop(void) {

@@ -1,9 +1,9 @@
-cmd_/home/rtai/ecas-master/src/commande/commande.o :=  i386-linux-gcc -m32 -Wp,-MD,/home/rtai/ecas-master/src/commande/.commande.o.d  -nostdinc -isystem /usr/lib/arcom/bin/../lib/gcc/i386-linux/3.4.4/include -D__KERNEL__ -Iinclude  -include include/linux/autoconf.h -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -ffreestanding -Os     -fomit-frame-pointer -pipe -msoft-float -mpreferred-stack-boundary=2 -fno-unit-at-a-time  -Iinclude/asm-i386/mach-default -Wdeclaration-after-statement  -I/usr/lib/arcom/realtime/include -Wall -ffast-math -mhard-float  -DMODULE -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(commande)"  -D"KBUILD_MODNAME=KBUILD_STR(commande)" -c -o /home/rtai/ecas-master/src/commande/commande.o /home/rtai/ecas-master/src/commande/commande.c
+cmd_/home/rtai/ecas/src/commande/commande.o :=  i386-linux-gcc -m32 -Wp,-MD,/home/rtai/ecas/src/commande/.commande.o.d  -nostdinc -isystem /usr/lib/arcom/bin/../lib/gcc/i386-linux/3.4.4/include -D__KERNEL__ -Iinclude  -include include/linux/autoconf.h -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -ffreestanding -Os     -fomit-frame-pointer -pipe -msoft-float -mpreferred-stack-boundary=2 -fno-unit-at-a-time  -Iinclude/asm-i386/mach-default -Wdeclaration-after-statement  -I/usr/lib/arcom/realtime/include -Wall -ffast-math -mhard-float  -DMODULE -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(commande)"  -D"KBUILD_MODNAME=KBUILD_STR(commande)" -c -o /home/rtai/ecas/src/commande/commande.o /home/rtai/ecas/src/commande/commande.c
 
-deps_/home/rtai/ecas-master/src/commande/commande.o := \
-  /home/rtai/ecas-master/src/commande/commande.c \
-  /home/rtai/ecas-master/src/commande/commande.h \
-  /home/rtai/ecas-master/src/commande/../lib/rtai.h \
+deps_/home/rtai/ecas/src/commande/commande.o := \
+  /home/rtai/ecas/src/commande/commande.c \
+  /home/rtai/ecas/src/commande/commande.h \
+  /home/rtai/ecas/src/commande/../lib/rtai.h \
   include/linux/init.h \
     $(wildcard include/config/modules.h) \
     $(wildcard include/config/hotplug.h) \
@@ -459,6 +459,6 @@ deps_/home/rtai/ecas-master/src/commande/commande.o := \
   /usr/lib/arcom/realtime/include/rtai_sched.h \
   /usr/lib/arcom/realtime/include/rtai_fifos.h \
 
-/home/rtai/ecas-master/src/commande/commande.o: $(deps_/home/rtai/ecas-master/src/commande/commande.o)
+/home/rtai/ecas/src/commande/commande.o: $(deps_/home/rtai/ecas/src/commande/commande.o)
 
-$(deps_/home/rtai/ecas-master/src/commande/commande.o):
+$(deps_/home/rtai/ecas/src/commande/commande.o):

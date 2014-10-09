@@ -19,5 +19,5 @@ u16 getValue(int);
 void enableOutput(void);
 void disableOutput(void);
 void triggerConv(void);
-void setValue( unsigned int,int);
+void setValue(u16 value, int channel);
 void test(void);

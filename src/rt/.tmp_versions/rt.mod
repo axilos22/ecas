@@ -1,2 +1,2 @@
-/home/rtai/ecas-master/src/rt/rt.ko
-/home/rtai/ecas-master/src/rt/rt.o
+/home/rtai/ecas/src/rt/rt.ko
+/home/rtai/ecas/src/rt/rt.o

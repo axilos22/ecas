@@ -1,6 +1,4 @@
 obj-m	   := pcm_3718.o
-
-KIT = arcom21.esiee.fr
 CURRENT = 2.6.16.14-arcom1
 KDIR = /usr/lib/arcom/lib/modules/${CURRENT}/build
 #KDIR = /opt/arcom/usr/lib/arcom/lib/modules/${CURRENT}/build
@@ -18,6 +16,4 @@ default:
 
 clean:
 	-rm -f *.o *.ko .*.cmd .*.flags *.mod.c *~
-send:
-	scp *.ko runarcom arcom@$(KIT):/home/arcom
  

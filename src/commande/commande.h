@@ -2,8 +2,8 @@
  #define VOLT_MIN -10
 
 #ifndef MAIN
-	#include "../lib/rtai.h" 
+	#include "../lib/rtai.h"
 #endif
 
 /* functions */
-int calcul(int pos_ajile, int theta_ajile);
+u16 calcul(int pos_ajile, int theta_ajile);

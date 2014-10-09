@@ -9,6 +9,7 @@
 int init3712(void) {	
 //TODO sequence d initialisation du 3712
   printk("3712 initialized - Ok\n");
+  enableOutput();
   return(0);
 }
 
@@ -34,7 +35,7 @@ u16 getValue(int channel) {
 	return result;
 }
 
-void setValue(unsigned int value, int channel) {
+void setValue(u16 value, int channel) {
 	u8 byte1, byte2;
 	byte1 = value>>8;
 	/*printk("byte1 value $%x\n",byte1);*/
@@ -69,6 +70,18 @@ void triggerConv(void) {
 
 void acq_stop(void) {
   printk("3712 stopped.\n");
+}
+
+/* dessine des creneaux sur l'oscillo */
+void test_adc(void) {
+	int i;
+	enableOutput();
+	while(1) {
+		setValue(i,0);
+		i++;
+		if(i>4094){i=0;}
+	}
+	
 }
 
 module_init(acq_start);

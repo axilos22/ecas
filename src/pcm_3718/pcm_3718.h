@@ -1,3 +1,9 @@
+/*
+* Spec : Max sampling rate: 100KHz
+sampling every 10µs
+*/
+
+
 /* required includes */
 #ifndef MAIN
 	 #include "../lib/rtai.h"
@@ -40,12 +46,6 @@ struct convertion {
 };
 typedef struct convertion Conversion;
 
-struct convArray {
-	Conversion convArr[MAX_CHANNEL*sizeof(Conversion)];
-	int	size;
-	};
-typedef struct convArray ConvArray;
-
 /* Prototypes */
 int	    init3718(void);
 void    setChannel(int channel);
@@ -56,3 +56,4 @@ int		testOneChannel(int channel);
 void 	checkSR(u8 sr);
 u16     readAD(void);
 Conversion readConv(void);
+void    wait_EOC(void);

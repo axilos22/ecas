@@ -1,1 +1,1 @@
-cmd_/home/rtai/ecas-master/src/commande/commande.ko := i386-linux-ld -m elf_i386 -m elf_i386 -r -o /home/rtai/ecas-master/src/commande/commande.ko /home/rtai/ecas-master/src/commande/commande.o /home/rtai/ecas-master/src/commande/commande.mod.o
+cmd_/home/rtai/ecas/src/commande/commande.ko := i386-linux-ld -m elf_i386 -m elf_i386 -r -o /home/rtai/ecas/src/commande/commande.ko /home/rtai/ecas/src/commande/commande.o /home/rtai/ecas/src/commande/commande.mod.o
