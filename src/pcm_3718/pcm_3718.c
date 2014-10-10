@@ -25,7 +25,7 @@ Others : -10/+10
 int init3718(void) {
     ADRangeSelect(0,1010);/* Met le channel 0 sur +10/-10 */
     ADRangeSelect(1,1010);/* Met le channel 1 sur +10/-10 */
-    
+
 	/* CR1 = no interrupt, no DMAE, Software trigger
        CR2 = interrupt lvl 6, no DMAE, ST
     */
@@ -70,7 +70,7 @@ Function which choose the bounds of channel to scan.
 void setChannelScan(int startChan, int stopChan) {
     u8 scan;
     if( (startChan > MAX_CHANNEL) || (stopChan > MAX_CHANNEL)) {
-        printk("ERROR, provided channels are out of bound.\n");
+        printk("ERROR, provided channels are out of bounds.\n");
     } else {
         scan = stopChan;
         scan = scan << 4;
@@ -105,7 +105,7 @@ u16 readAD(void) {
 Conversion readConv(void) {
 	u8 sr;
 	Conversion conv;
-	sr = inb(STATUS);
+	/*sr = inb(STATUS);*/
 	/*checkSR(sr);*/
 	conv.channel = 0x0F&inb(IO_LOWB);
 	conv.value = (inb(IO_HIGHB)<<4)+(inb(IO_LOWB)>>4);
@@ -148,12 +148,29 @@ void wait_EOC(void) {
 	outb(0xFF,STATUS); /*reset the int */
 }
 
+Dual_acq doubleAcq(void) {
+    Conversion conv;
+    Dual_acq da;
+    startConv();
+    wait_EOC();
+    conv = readConv();
+    if(conv.channel == 0) {da.angle = conv.value;}
+    if(conv.channel == 1) {da.position = conv.value;}
+    startConv();
+    wait_EOC();
+    conv = readConv();
+    if(conv.channel == 0) {da.angle = conv.value;}
+    if(conv.channel == 1) {da.position = conv.value;}
+    return da;
+}
+
 
 module_init(pcm_start);
 module_exit(pcm_stop);
 
 /* Example of exporting a function */
 EXPORT_SYMBOL(readConv);
+EXPORT_SYMBOL(doubleAcq);
 EXPORT_SYMBOL(wait_EOC);
 EXPORT_SYMBOL(checkSR);
 EXPORT_SYMBOL(testOneChannel);

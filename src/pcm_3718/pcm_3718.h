@@ -43,10 +43,15 @@ sampling every 10µs
 struct convertion {
 	u16 value;
 	u8 channel;
-};
-typedef struct convertion Conversion;
+}; typedef struct convertion Conversion;
+
+struct dual_acq {
+    u16 position;
+    u16 angle;
+}; typedef struct dual_acq Dual_acq;
 
 /* Prototypes */
+Dual_acq doubleAcq(void);
 int	    init3718(void);
 void    setChannel(int channel);
 void    setChannelScan(int startChan, int stopChan);

@@ -13,7 +13,6 @@ double y1_pos_V = 0.0;
 double y2_theta_rad = 0.0;
 double y2_theta_V = 0.0;
 
-double commande= 0.0;
 double x1chap= 0.0;
 double x2chap= 0.0;
 double x3chap= 0.0;
@@ -24,6 +23,7 @@ double _x2chap= 0.0;
 double _x3chap= 0.0;
 double _x4chap= 0.0;
 
+double commande= 0.0;
 u16 commande_ajile = 2048;
 
 u16 calcul(int pos_ajile, int theta_ajile) {
