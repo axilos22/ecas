@@ -5,27 +5,31 @@ static u16 x_acquis, theta_acquis;
 void cmd_pendule(long arg) {
 	int boucle = 0, commande = 1800;
 	/*while(boucle < 10) {*/
-	while(1) {			
+	while(1) {
             /*printk("[%d]\tcmd\tcmd = %u\n",boucle,commande);*/
             printk("[%d]cmd\tcmd=%d\n",boucle,commande);
             setValue(calcul(x_acquis,theta_acquis),0);
             if((theta_acquis>2068)&&(theta_acquis< 2028)) {setValue(2048,0);}
             boucle++;
-            rt_task_wait_period();       
+            rt_task_wait_period();
 		}
 }
 void acquisition(long arg) {
 	int boucle = 0;
+	Dual_acq da;
 	/*while(boucle < 20) {*/
 	while(1) {
 		printk("[%d]acq\tx=%d\ttheta=%d\n",boucle,x_acquis,theta_acquis);
-		startConv();
+		/*startConv();
 		wait_EOC();
 		setGrandeur(readConv());
 		rt_task_wait_period();
 		startConv();
 		wait_EOC();
-		setGrandeur(readConv());
+		setGrandeur(readConv());*/
+		da = doubleAcq();
+		x_acquis = da.position;
+		theta_acquis = da.angle;
 		boucle++;
 		rt_task_wait_period();
 	}
