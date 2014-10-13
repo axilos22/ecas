@@ -24,7 +24,7 @@ Others : -10/+10
 @return 0 if all clear.
 */
 int init3718(void) {	
-    ADRangeSelect(0,1010);/* Met le channel 0 sur +10/-10 */
+    ADRangeSelect(0,55);/* Met le channel 0 sur +10/-10 */
     ADRangeSelect(1,1010);/* Met le channel 1 sur +10/-10 */
 	/* CR1 = no interrupt, no DMAE, Software trigger
        CR2 = interrupt lvl 6, no DMAE, ST

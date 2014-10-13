@@ -20,7 +20,7 @@
 #define STACK_SIZE  2000
 #define TICK_PERIOD 1000000    //  1 ms
 #define PERIODE 10000000    //10ms
-#define PERIODE_ACQ 2000000 //2 ms
+#define PERIODE_ACQ 5000000 //5 ms
 #define N_BOUCLE 10000000
 #define NUMERO 1
 #define PRIORITE 1
