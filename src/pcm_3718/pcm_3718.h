@@ -45,13 +45,13 @@ struct convertion {
 	u8 channel;
 }; typedef struct convertion Conversion;
 
-struct dual_acq {
+struct acq {
     u16 position;
     u16 angle;
-}; typedef struct dual_acq Dual_acq;
+}; typedef struct acq Acq;
 
 /* Prototypes */
-Dual_acq doubleAcq(void);
+Acq	 	doubleAcq(void);
 int	    init3718(void);
 void    setChannel(int channel);
 void    setChannelScan(int startChan, int stopChan);

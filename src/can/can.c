@@ -96,36 +96,6 @@ u8 identifier, rtr; int i;
     return msg;
 }
 
-void sendI(int i) {
-unsigned int temp; msg_CAN msg;
-	msg.id = 10;
-	msg.size = 2;
-	temp = (i&0xff00)>>8;
-    msg.data[1] = (unsigned char) temp;
-    temp = (i&0x00ff);
-    msg.data[0] = (unsigned char) temp;
-    send_CAN(msg);
-}
-
-void sendU16(u16 data, int id) {
-    msg_CAN msg;
-	msg.id = id;
-	msg.size = 2;
-	msg.data[0] = ((data&0x00ff));
-    msg.data[1] = ((data&0xff00)>>8);
-    send_CAN(msg);
-}
-
-void takeAndDisplay(void) {
-int i = 0; msg_CAN in;
-	in = receive_CAN();	//recoit le message
-	if(isValid(in)) {
-		i = (int) (in.data[1]<<8)+in.data[0];
-		/* PCM3712setda1(i); */
-		/*printk("Latence = %d ns \n",(int)rt_get_time_ns()-temps);*/
-	}
-}
-
 void init_can(void) {
 	printk("Initialisation du CAN en cours\n");
 	outb(0x01,CAN_CONTROL);
@@ -135,14 +105,14 @@ void init_can(void) {
 	outb(0x03,CAN_BTR0);
 	outb(0x1c,CAN_BTR1);
 	outb(0xFA,CAN_OCR);
-	#if SYN == 1
+	/*#if SYN == 1
 		outb(0x05,CAN_IR);
 		inb(CAN_IR); // ack interruption
 		outb(0x02,CAN_CONTROL);
 		printk("Initialisation terminee, interruptions activees.\n");
-	#else
-		outb(0x00,CAN_CONTROL);
-	#endif
+	#else*/
+	outb(0x00,CAN_CONTROL);
+	/*#endif*/
 	printk("Initialisation terminee.\n");
 }
 
@@ -154,13 +124,6 @@ int isValid(msg_CAN msg) {
     } else {
     	return 1;
     }
-
-}
-
-unsigned int toInt(u8 c1,u8 c2) {
-unsigned int i = 0;
-	i = (int) (c1<<8)+c2;
-	return i;
 }
 
 int start(void) {
@@ -173,14 +136,23 @@ void stop(void) {
 	printk("module CAN stopé\n");
 }
 
+void sendCmd(u16 commande) {
+	u8 h_byte, l_byte;
+	out msg_CAN;
+	h_byte = commande>>8;
+	l_byte = commande&0x00FF;
+
+	out.id = 16;
+	out.size = 2;
+	out.data[1] = l_byte;
+	out.data[2] = h_byte;
+	send_CAN(out);
+}
+
 module_init(start);
 module_exit(stop);
 
-EXPORT_SYMBOL(init_can);
-EXPORT_SYMBOL(sendU16);
-EXPORT_SYMBOL(isValid);
-EXPORT_SYMBOL(receive_CAN);
-EXPORT_SYMBOL(sendI);
 EXPORT_SYMBOL(send_CAN);
-EXPORT_SYMBOL(takeAndDisplay);
-EXPORT_SYMBOL(toInt);
+EXPORT_SYMBOL(receive_CAN);
+EXPORT_SYMBOL(init_can);
+EXPORT_SYMBOL(isValid);

@@ -1,2 +1,2 @@
-/home/rtai/ecas/src/commande/commande.ko
-/home/rtai/ecas/src/commande/commande.o
+/home/rtai/ecas-master/src/commande/commande.ko
+/home/rtai/ecas-master/src/commande/commande.o

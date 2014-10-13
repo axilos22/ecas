@@ -1,7 +1,7 @@
-cmd_/home/rtai/ecas/src/pcm_3718/pcm_3718.mod.o :=  i386-linux-gcc -m32 -Wp,-MD,/home/rtai/ecas/src/pcm_3718/.pcm_3718.mod.o.d  -nostdinc -isystem /usr/lib/arcom/bin/../lib/gcc/i386-linux/3.4.4/include -D__KERNEL__ -Iinclude  -include include/linux/autoconf.h -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -ffreestanding -Os     -fomit-frame-pointer -pipe -msoft-float -mpreferred-stack-boundary=2 -fno-unit-at-a-time  -Iinclude/asm-i386/mach-default -Wdeclaration-after-statement     -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(pcm_3718)"  -D"KBUILD_MODNAME=KBUILD_STR(pcm_3718)" -DMODULE -c -o /home/rtai/ecas/src/pcm_3718/pcm_3718.mod.o /home/rtai/ecas/src/pcm_3718/pcm_3718.mod.c
+cmd_/home/rtai/ecas-master/src/pcm_3718/pcm_3718.mod.o :=  i386-linux-gcc -m32 -Wp,-MD,/home/rtai/ecas-master/src/pcm_3718/.pcm_3718.mod.o.d  -nostdinc -isystem /usr/lib/arcom/bin/../lib/gcc/i386-linux/3.4.4/include -D__KERNEL__ -Iinclude  -include include/linux/autoconf.h -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -ffreestanding -Os     -fomit-frame-pointer -pipe -msoft-float -mpreferred-stack-boundary=2 -fno-unit-at-a-time  -Iinclude/asm-i386/mach-default -Wdeclaration-after-statement     -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(pcm_3718)"  -D"KBUILD_MODNAME=KBUILD_STR(pcm_3718)" -DMODULE -c -o /home/rtai/ecas-master/src/pcm_3718/pcm_3718.mod.o /home/rtai/ecas-master/src/pcm_3718/pcm_3718.mod.c
 
-deps_/home/rtai/ecas/src/pcm_3718/pcm_3718.mod.o := \
-  /home/rtai/ecas/src/pcm_3718/pcm_3718.mod.c \
+deps_/home/rtai/ecas-master/src/pcm_3718/pcm_3718.mod.o := \
+  /home/rtai/ecas-master/src/pcm_3718/pcm_3718.mod.c \
     $(wildcard include/config/module/unload.h) \
   include/linux/module.h \
     $(wildcard include/config/modules.h) \
@@ -258,6 +258,6 @@ deps_/home/rtai/ecas/src/pcm_3718/pcm_3718.mod.o := \
   include/linux/vermagic.h \
   include/linux/version.h \
 
-/home/rtai/ecas/src/pcm_3718/pcm_3718.mod.o: $(deps_/home/rtai/ecas/src/pcm_3718/pcm_3718.mod.o)
+/home/rtai/ecas-master/src/pcm_3718/pcm_3718.mod.o: $(deps_/home/rtai/ecas-master/src/pcm_3718/pcm_3718.mod.o)
 
-$(deps_/home/rtai/ecas/src/pcm_3718/pcm_3718.mod.o):
+$(deps_/home/rtai/ecas-master/src/pcm_3718/pcm_3718.mod.o):

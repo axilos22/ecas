@@ -1,1 +1,1 @@
-cmd_/home/rtai/ecas/src/acq_3712/acq_3712.ko := i386-linux-ld -m elf_i386 -m elf_i386 -r -o /home/rtai/ecas/src/acq_3712/acq_3712.ko /home/rtai/ecas/src/acq_3712/acq_3712.o /home/rtai/ecas/src/acq_3712/acq_3712.mod.o
+cmd_/home/rtai/ecas-master/src/acq_3712/acq_3712.ko := i386-linux-ld -m elf_i386 -m elf_i386 -r -o /home/rtai/ecas-master/src/acq_3712/acq_3712.ko /home/rtai/ecas-master/src/acq_3712/acq_3712.o /home/rtai/ecas-master/src/acq_3712/acq_3712.mod.o

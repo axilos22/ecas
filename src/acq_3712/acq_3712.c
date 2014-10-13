@@ -69,12 +69,13 @@ void triggerConv(void) {
 }
 
 void acq_stop(void) {
-  printk("3712 stopped.\n");
+	disableOutput();
+	printk("3712 stopped.\n");
 }
 
 /* dessine des creneaux sur l'oscillo */
 void test_adc(void) {
-	int i;
+	int i=0;
 	enableOutput();
 	while(1) {
 		setValue(i,0);

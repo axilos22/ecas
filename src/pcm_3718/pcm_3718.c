@@ -9,11 +9,12 @@
 int pcm_start(void) {
 	printk("3718 started.\n");
     init3718();
+    setChannelScan(0,1);
     return(0);
 }
 
 void pcm_stop(void) {
-  printk("3718 - stopped.\n");
+	printk("3718 - stopped.\n");
 }
 /*
 Initialization function of the 3718.
@@ -22,10 +23,9 @@ Channel 0 : -5v/+5V
 Others : -10/+10
 @return 0 if all clear.
 */
-int init3718(void) {
+int init3718(void) {	
     ADRangeSelect(0,1010);/* Met le channel 0 sur +10/-10 */
     ADRangeSelect(1,1010);/* Met le channel 1 sur +10/-10 */
-
 	/* CR1 = no interrupt, no DMAE, Software trigger
        CR2 = interrupt lvl 6, no DMAE, ST
     */
@@ -103,10 +103,7 @@ u16 readAD(void) {
 }
 
 Conversion readConv(void) {
-	u8 sr;
 	Conversion conv;
-	/*sr = inb(STATUS);*/
-	/*checkSR(sr);*/
 	conv.channel = 0x0F&inb(IO_LOWB);
 	conv.value = (inb(IO_HIGHB)<<4)+(inb(IO_LOWB)>>4);
 	return conv;
@@ -148,20 +145,20 @@ void wait_EOC(void) {
 	outb(0xFF,STATUS); /*reset the int */
 }
 
-Dual_acq doubleAcq(void) {
+Acq doubleAcq(void) {
     Conversion conv;
-    Dual_acq da;
+    Acq ak;
     startConv();
     wait_EOC();
     conv = readConv();
-    if(conv.channel == 0) {da.angle = conv.value;}
-    if(conv.channel == 1) {da.position = conv.value;}
+    if(conv.channel == 0) {ak.angle = conv.value;}
+    if(conv.channel == 1) {ak.position = conv.value;}
     startConv();
     wait_EOC();
     conv = readConv();
-    if(conv.channel == 0) {da.angle = conv.value;}
-    if(conv.channel == 1) {da.position = conv.value;}
-    return da;
+    if(conv.channel == 0) {ak.angle = conv.value;}
+    if(conv.channel == 1) {ak.position = conv.value;}
+    return ak;
 }
 
 
@@ -169,8 +166,9 @@ module_init(pcm_start);
 module_exit(pcm_stop);
 
 /* Example of exporting a function */
-EXPORT_SYMBOL(readConv);
 EXPORT_SYMBOL(doubleAcq);
+
+/*EXPORT_SYMBOL(readConv);
 EXPORT_SYMBOL(wait_EOC);
 EXPORT_SYMBOL(checkSR);
 EXPORT_SYMBOL(testOneChannel);
@@ -179,5 +177,5 @@ EXPORT_SYMBOL(init3718);
 EXPORT_SYMBOL(ADRangeSelect);
 EXPORT_SYMBOL(readAD);
 EXPORT_SYMBOL(setChannel);
-EXPORT_SYMBOL(setChannelScan);
+EXPORT_SYMBOL(setChannelScan);*/
 

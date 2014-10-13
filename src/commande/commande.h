@@ -6,4 +6,4 @@
 #endif
 
 /* functions */
-u16 calcul(int pos_ajile, int theta_ajile);
+u16 calcul(u16 pos_ajile, u16 theta_ajile);
