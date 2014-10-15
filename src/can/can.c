@@ -1,5 +1,25 @@
 #include	"can.h"
 
+void init_can(void) {
+	printk("Initialisation du CAN en cours\n");
+	outb(0x01,CAN_CONTROL);
+	outb(0x04,CAN_COMMAND);
+	outb(0xff,CAN_ACR);
+	outb(0xff,CAN_AMR);
+	outb(0x03,CAN_BTR0);
+	outb(0x1c,CAN_BTR1);
+	outb(0xFA,CAN_OCR);
+	#if SYN == 1
+		outb(0x05,CAN_IR);
+		inb(CAN_IR); // ack interruption
+		outb(0x02,CAN_CONTROL);
+		printk("Initialisation terminee, interruptions activees.\n");
+	#else
+		outb(0x00,CAN_CONTROL);
+	#endif
+	printk("Initialisation terminee.\n");
+}
+
 void send_CAN(msg_CAN msg) {
 	int i = 0; u8 id_byte, rtr_byte;
 
@@ -96,17 +116,6 @@ u8 identifier, rtr; int i;
     return msg;
 }
 
-void sendI(int i) {
-unsigned int temp; msg_CAN msg;
-	msg.id = 10;
-	msg.size = 2;
-	temp = (i&0xff00)>>8;
-    msg.data[1] = (unsigned char) temp;
-    temp = (i&0x00ff);
-    msg.data[0] = (unsigned char) temp;
-    send_CAN(msg);
-}
-
 void sendU16(u16 data, int id) {
     msg_CAN msg;
 	msg.id = id;
@@ -114,36 +123,6 @@ void sendU16(u16 data, int id) {
 	msg.data[0] = ((data&0x00ff));
     msg.data[1] = ((data&0xff00)>>8);
     send_CAN(msg);
-}
-
-void takeAndDisplay(void) {
-int i = 0; msg_CAN in;
-	in = receive_CAN();	//recoit le message
-	if(isValid(in)) {
-		i = (int) (in.data[1]<<8)+in.data[0];
-		/* PCM3712setda1(i); */
-		/*printk("Latence = %d ns \n",(int)rt_get_time_ns()-temps);*/
-	}
-}
-
-void init_can(void) {
-	printk("Initialisation du CAN en cours\n");
-	outb(0x01,CAN_CONTROL);
-	outb(0x04,CAN_COMMAND);
-	outb(0xff,CAN_ACR);
-	outb(0xff,CAN_AMR);
-	outb(0x03,CAN_BTR0);
-	outb(0x1c,CAN_BTR1);
-	outb(0xFA,CAN_OCR);
-	#if SYN == 1
-		outb(0x05,CAN_IR);
-		inb(CAN_IR); // ack interruption
-		outb(0x02,CAN_CONTROL);
-		printk("Initialisation terminee, interruptions activees.\n");
-	#else
-		outb(0x00,CAN_CONTROL);
-	#endif
-	printk("Initialisation terminee.\n");
 }
 
 int isValid(msg_CAN msg) {
@@ -165,22 +144,70 @@ unsigned int i = 0;
 
 int start(void) {
 	init_can();
-	printk("module CAN chargé\n");
+	printk("CAN module loaded.\n");
 	return 0;
 }
 
 void stop(void) {
-	printk("module CAN stopé\n");
+	printk("CAN module stopped.\n");
+}
+
+/* Send aquisition over a CAN msg format :
+H_position	: data 3
+L_position	: data 2
+H_angle		: data 1
+L_angle		: data 0
+*/
+void sendAcq(Acq aq) {
+	msg_CAN msg;
+
+	msg.id = ID_ACQ;
+	msg.size = 4;
+	msg.data[3] = aq.position>>8;
+	msg.data[2] = aq.position&0x00FF;
+	msg.data[1] = aq.angle>>8;
+	msg.data[0] = aq.angle&0x00FF;
+	send_CAN(msg);
+}
+
+void sendCmd(u16 cmd) {
+	sendU16(cmd,ID_CMD);
+}
+
+Acq canToAcq(msg_CAN msg) {
+	Acq aq;
+	aq.position = msg.data[3];
+	aq.position = aq.position<<8;
+	aq.position = aq.position+msg.data[2];
+
+	aq.angle = msg.data[1];
+	aq.angle = aq.angle<<8;
+	aq.angle = aq.angle+msg.data[0];
+	return aq;
+}
+
+u16 canToCmd(msg_CAN msg) {
+	u16 out;
+	out = msg.data[1];
+	out = out<<8;
+	out = out+msg.data[0];
+	return out;
+}
+/* Gives back a boolean according if it is an acquisition message or not
+*/
+int isAcq(msg_CAN msg) {
+	if(msg.id == ID_ACQ) {
+		return 1;
+	} else {
+		return 0;
+	}
 }
 
 module_init(start);
 module_exit(stop);
 
-EXPORT_SYMBOL(init_can);
-EXPORT_SYMBOL(sendU16);
-EXPORT_SYMBOL(isValid);
-EXPORT_SYMBOL(receive_CAN);
-EXPORT_SYMBOL(sendI);
-EXPORT_SYMBOL(send_CAN);
-EXPORT_SYMBOL(takeAndDisplay);
-EXPORT_SYMBOL(toInt);
+EXPORT_SYMBOL(sendAcq);
+EXPORT_SYMBOL(sendCmd);
+EXPORT_SYMBOL(canToAcq);
+EXPORT_SYMBOL(canToCmd);
+EXPORT_SYMBOL(isAcq);

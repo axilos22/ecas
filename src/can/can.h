@@ -1,6 +1,8 @@
 /* required includes */
+#include "../pcm_3718/pcm_3718.h"
 #ifndef MAIN
-	 #include "../lib/rtai.h"
+	#define MAIN 1
+	#include "../lib/rtai.h"
 #endif
 
 /* define pour gestion registres CAN 7841 */
@@ -21,6 +23,9 @@
 #define CAN_RECEIVE_RTR (CAN_CONTROL+21)
 #define CAN_RECEIVE_B1 (CAN_CONTROL+22)
 
+#define	ID_ACQ			16
+#define	ID_CMD			17
+
 #define SYN 			0
 #ifndef VERBOSE
     #define	VERBOSE			3
@@ -31,11 +36,12 @@ typedef struct {int id; int size;u8 data[8];} msg_CAN;
 
 void send_CAN(msg_CAN msg);
 msg_CAN receive_CAN(void);
-void sendI(int i);
-void takeAndDisplay(void);
 void init_can(void);
 int isValid(msg_CAN msg);
 unsigned int toInt(u8 c1,u8 c2);
 void sendU16(u16 data, int id);
-
-/*static int temps=0;*/
+void sendAcq(Acq aq);
+void sendCmd(u16 cmd);
+Acq canToAcq(msg_CAN msg);
+u16 canToCmd(msg_CAN msg);
+int isAcq(msg_CAN msg);
