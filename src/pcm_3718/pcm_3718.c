@@ -18,14 +18,12 @@ void pcm_stop(void) {
 }
 /*
 Initialization function of the 3718.
-This function set the 3718 in a ready state in order to do a A/D Conversion.
 Channel 0 : -5v/+5V
 Others : -10/+10
-@return 0 if all clear.
 */
-int init3718(void) {	
-    ADRangeSelect(0,55);/* Met le channel 0 sur +10/-10 */
-    ADRangeSelect(1,1010);/* Met le channel 1 sur +10/-10 */
+int init3718(void) {
+    ADRangeSelect(0,55);
+    ADRangeSelect(1,1010);
 	/* CR1 = no interrupt, no DMAE, Software trigger
        CR2 = interrupt lvl 6, no DMAE, ST
     */
@@ -137,14 +135,20 @@ int testOneChannel(int channel) {
 
 void wait_EOC(void) {
 	u8 sr = inb(STATUS);
-	/*printk("wait eoc.sr=%x\n",sr);*/
+	#if VERBOSE > 2
+        printk("wait eoc.sr=%x\n",sr);
+    #endif // VERBOSE
 	while((sr&0x10)==0x00) {
 		sr = inb(STATUS);
-		/*printk("busy sr=%x\n",sr);*/
+		#if VERBOSE > 2
+            printk("busy sr=%x\n",sr);
+		#endif // VERBOSE
 	}
 	outb(0xFF,STATUS); /*reset the int */
 }
-
+/* This function do 2 successive conversions:
+* It automatically set the values to their define usages.
+*/
 Acq doubleAcq(void) {
     Conversion conv;
     Acq ak;
@@ -165,17 +169,5 @@ Acq doubleAcq(void) {
 module_init(pcm_start);
 module_exit(pcm_stop);
 
-/* Example of exporting a function */
+/* Exports */
 EXPORT_SYMBOL(doubleAcq);
-
-/*EXPORT_SYMBOL(readConv);
-EXPORT_SYMBOL(wait_EOC);
-EXPORT_SYMBOL(checkSR);
-EXPORT_SYMBOL(testOneChannel);
-EXPORT_SYMBOL(startConv);
-EXPORT_SYMBOL(init3718);
-EXPORT_SYMBOL(ADRangeSelect);
-EXPORT_SYMBOL(readAD);
-EXPORT_SYMBOL(setChannel);
-EXPORT_SYMBOL(setChannelScan);*/
-

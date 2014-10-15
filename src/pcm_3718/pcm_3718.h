@@ -2,8 +2,6 @@
 * Spec : Max sampling rate: 100KHz
 sampling every 10µs
 */
-
-
 /* required includes */
 #ifndef MAIN
 	 #include "../lib/rtai.h"
