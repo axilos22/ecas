@@ -1,5 +1,7 @@
 obj-m	   := rt.o
-KIT = arcom16.esiee.fr
+KIT = arcom17.esiee.fr
+KIT2 = arcom21.esiee.fr
+KIT3 = arcom22.esiee.fr
 CURRENT = 2.6.16.14-arcom1
 KDIR = /usr/lib/arcom/lib/modules/${CURRENT}/build
 PWD = $(shell pwd)

@@ -1,4 +1,4 @@
-#include "rt.h"
+#include "rt2.h"
 
 static u16 x_acquis, theta_acquis;
 
@@ -30,31 +30,13 @@ void acquisition(long arg) {
 }
 */
 
-void tacheP1(long arg) {
-	Acq ak; 
-	int boucle = 0; 
-	u16 commande;
-	msg_CAN msg; 
-	
-	while (boucle<10){
-		ak = doubleAcq();
-		do {
-			sendAcq(ak);
-			msg = receive_CAN();
-			rt_task_wait_period();
-		}
-		while (msg.id == 0);		
-		printk("msg recu !\n")
-		printk("[%d]",boucle);print(msg);
-		if(isAcq) {
-			printk("in acq!\n");
-			ak = canToAcq(msg);
-			setValue(calcul(ak.position,ak.angle),0);
-		}
-		if(isCmd) {
-			commande = canToCmd(msg);
-			setValue(commande,0);
-		}
+void tacheP1(long arg) {	
+	int boucle = 0;
+	msg_CAN msg;
+	while (1){
+		msg = receive_CAN();
+		print(msg);
+		send_CAN(msg);
 		boucle++;
 		rt_task_wait_period();
 	}

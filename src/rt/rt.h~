@@ -4,11 +4,11 @@
     #include "../lib/rtai.h"
 #endif
 
-/*Include for ADC */
-#include	"../pcm_3718/pcm_3718.h"
-
 /*Include for CAN */
 #include	"../can/can.h"
+
+/*Include for ADC */
+#include	"../pcm_3718/pcm_3718.h"
 
 /* Include for DAC */
 #include	"../acq_3712/acq_3712.h"

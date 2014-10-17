@@ -98,8 +98,7 @@ u8 identifier, rtr; int i;
         for(i=0;i<msg.size;i++) {
 			printk("in[%d] = $%x\n",i,msg.data[i]);
 		}
-		printk("Num : %d",toInt(msg.data[1],msg.data[0]));
-		printk("\n\n");
+		printk("\n");
 		#endif
         outb(0x04,CAN_COMMAND);
     }
@@ -112,6 +111,7 @@ u8 identifier, rtr; int i;
     	msg.id = 0;
     	msg.data[0] = 0;
     	msg.data[1] = 0;
+    	outb(0x04,CAN_COMMAND);
     }
     return msg;
 }
@@ -193,8 +193,7 @@ u16 canToCmd(msg_CAN msg) {
 	out = out+msg.data[0];
 	return out;
 }
-/* Gives back a boolean according if it is an acquisition message or not
-*/
+/* Gives back a boolean according if it is an acquisition message or not */
 int isAcq(msg_CAN msg) {
 	if(msg.id == ID_ACQ) {
 		return 1;
@@ -203,11 +202,33 @@ int isAcq(msg_CAN msg) {
 	}
 }
 
+int isCmd(msg_CAN msg) {
+	if(msg.id == ID_CMD) {
+		return 1;
+	} else {
+		return 0;
+	}
+}
+
+void print(msg_CAN msg) {
+	int i = 0;
+	printk("--------- Message CAN ---------\nid = %d \t size= %d\n",msg.id,msg.size);
+	for(i=0; i<msg.size;i++) {
+		printk("data[%d]= $%x",i,msg.data[i],msg.data[i]);
+	}
+	printk("\n");
+}
+
 module_init(start);
 module_exit(stop);
 
+EXPORT_SYMBOL(send_CAN);
+EXPORT_SYMBOL(receive_CAN);
 EXPORT_SYMBOL(sendAcq);
 EXPORT_SYMBOL(sendCmd);
 EXPORT_SYMBOL(canToAcq);
 EXPORT_SYMBOL(canToCmd);
 EXPORT_SYMBOL(isAcq);
+EXPORT_SYMBOL(isCmd);
+EXPORT_SYMBOL(print);
+

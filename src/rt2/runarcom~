@@ -11,7 +11,6 @@ read junk
 sudo insmod /usr/realtime/modules/rtai_hal.ko
 sudo insmod /usr/realtime/modules/rtai_sched.ko
 sudo insmod pcm_3718.ko
-sudo insmod can.ko
 sudo insmod acq_3712.ko
 sudo insmod commande.ko
 sudo insmod $1.ko
@@ -23,7 +22,6 @@ read junk
 sudo rmmod $1
 sudo rmmod commande.ko
 sudo rmmod acq_3712.ko
-sudo rmmod can.ko
 sudo rmmod pcm_3718.ko
 sudo rmmod rtai_sched
 sudo rmmod rtai_hal
