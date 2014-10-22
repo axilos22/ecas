@@ -28,7 +28,7 @@
 
 #define SYN 			0
 #ifndef VERBOSE
-    #define	VERBOSE			1
+    #define	VERBOSE			2
 #endif // VERBOSE
 
 //structures message_CAN

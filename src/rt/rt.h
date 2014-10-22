@@ -28,6 +28,6 @@
 #define USE_FLOAT 1
 
 /* Declaration de taches */
-static RT_TASK t_aq, t_em, t_cmd;
+static RT_TASK t_aq, t_cmd, t_can;
 
 /* Utiliser les float RT TAST INIT*/

@@ -35,6 +35,7 @@ void tacheP1(long arg) {
 	msg_CAN msg;
 	while (1){
 		msg = receive_CAN();
+		printk("[%d] \n",boucle);
 		print(msg);
 		send_CAN(msg);
 		boucle++;
