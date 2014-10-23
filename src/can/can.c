@@ -25,7 +25,6 @@ void send_CAN(msg_CAN msg) {
 
     #if VERBOSE > 2
 		printk("######################  Emmission  ######################\n");
-        //affichage test : affiche les donnees a envoyer
         printk("ID: %d\nSIZE: %d\n",msg.id,msg.size);
         printk("Tab : \n");
         for(i=0;i<msg.size;i++) {
@@ -214,7 +213,7 @@ void print(msg_CAN msg) {
 	int i = 0;
 	printk("--------- Message CAN ---------\nid = %d \t size= %d\n",msg.id,msg.size);
 	for(i=0; i<msg.size;i++) {
-		printk("data[%d]= $%x",i,msg.data[i],msg.data[i]);
+		printk("data[%d]= $%x\t",i,msg.data[i]);
 	}
 	printk("\n");
 }

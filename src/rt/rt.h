@@ -24,11 +24,10 @@
 #define N_BOUCLE 10000000
 #define NUMERO 1
 #define PRIORITE 1
+#define PRIORITE_MAX 0
 #define USE_FLOAT 1
 
 /* Declaration de taches */
-static RT_TASK tache1;
-
-void setGrandeur(Conversion conv);
+static RT_TASK t_aq, t_cmd, t_can;
 
 /* Utiliser les float RT TAST INIT*/

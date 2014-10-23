@@ -1,8 +1,9 @@
 obj-m	   := rt2.o
-KIT = arcom10.esiee.fr
-KIT2 = arcom21.esiee.fr
-KIT3 = arcom22.esiee.fr
-KIT4 = arcom17.esiee.fr
+KIT17 = arcom17.esiee.fr
+KIT21 = arcom21.esiee.fr
+KIT22 = arcom22.esiee.fr
+KIT16 = arcom16.esiee.fr
+KIT10 = arcom10.esiee.fr
 CURRENT = 2.6.16.14-arcom1
 KDIR = /usr/lib/arcom/lib/modules/${CURRENT}/build
 PWD = $(shell pwd)
@@ -19,4 +20,4 @@ default:
 clean:
 	-rm -f *.o *.ko .*.cmd .*.flags *.mod.c *~
 send:
-	scp *.ko ../can/can.ko ../pcm_3718/pcm_3718.ko ../acq_3712/acq_3712.ko ../commande/commande.ko runarcom arcom@$(KIT):/home/arcom
+	scp *.ko ../can/can.ko ../pcm_3718/pcm_3718.ko ../acq_3712/acq_3712.ko ../commande/commande.ko runarcom arcom@$(KIT17):/home/arcom
