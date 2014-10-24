@@ -20,6 +20,7 @@
 #define STACK_SIZE  2000
 #define TICK_PERIOD 1000000    //  1 ms
 #define PERIODE 10000000    //10ms
+
 #define PERIODE_ACQ 5000000 //5 ms
 #define N_BOUCLE 10000000
 #define NUMERO 1
@@ -27,7 +28,10 @@
 #define PRIORITE_MAX 0
 #define USE_FLOAT 1
 
+#define num_irq	7
+
 /* Declaration de taches */
-static RT_TASK t_aq, t_cmd, t_can;
+static RT_TASK t_aq;
+/*static SEM sema;*/
 
 /* Utiliser les float RT TAST INIT*/
