@@ -8,5 +8,8 @@
 #include <rtai_sched.h>
 #include <rtai_fifos.h>
 
+#include <rtai_sem.h>   /* RTAI semaphores */
+
 MODULE_LICENSE("GPL");
+
 

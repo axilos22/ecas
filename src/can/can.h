@@ -26,9 +26,9 @@
 #define	ID_ACQ			16
 #define	ID_CMD			17
 
-#define SYN 			0
+#define SYN 			1
 #ifndef VERBOSE
-    #define	VERBOSE			2
+    #define	VERBOSE			0
 #endif // VERBOSE
 
 //structures message_CAN
