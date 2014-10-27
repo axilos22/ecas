@@ -1,35 +1,38 @@
 /**********************************************************/
 /* Code for handling the PCM 3718 ADC             		  */
-/* version  : RTAI 3.4                                     */
-/* Authors  : ARRACHIDI - JEANNE - TRAN                      */
+/* version  : RTAI 3.4 -                                  */
+/* Authors  : ARRACHIDI - JEANNE - TRAN                   */
 /**********************************************************/
-
 #include "pcm_3718.h"
 
 int pcm_start(void) {
-	printk("3718 started.\n");
+	printk("PCM3718 module launched.\n");
     init3718();
-    setChannelScan(0,1);
+    setChannelScan(0,LAST_CHANNEL_TO_CHECK);
     return(0);
 }
 
 void pcm_stop(void) {
-	printk("3718 - stopped.\n");
+	printk("PCM3718 module stopped.\n");
 }
 /*
 Initialization function of the 3718.
 Channel 0 : -5v/+5V
+Channel 1 : -10v/+10V
+Channel 2 : -10v/+10V
 Others : -10/+10
 */
 int init3718(void) {
+	int i = 0;
     ADRangeSelect(0,55);
-    ADRangeSelect(1,1010);
+    for(i=1; i< LAST_CHANNEL_TO_CHECK;i++) {
+    	ADRangeSelect(i,1010);
+    }    
 	/* CR1 = no interrupt, no DMAE, Software trigger
        CR2 = interrupt lvl 6, no DMAE, ST
     */
 	outb(CR1,CONTROL);
 	outb(0xFF,STATUS); /*reset the int */
-	printk("3718 Initialization.... - Ok\n");
 	return(0);
 }
 
@@ -149,6 +152,7 @@ void wait_EOC(void) {
 /* This function do 2 successive conversions:
 * It automatically set the values to their define usages.
 */
+
 Acq doubleAcq(void) {
     Conversion conv;
     Acq ak;
@@ -165,9 +169,35 @@ Acq doubleAcq(void) {
     return ak;
 }
 
+TriAcq tripleAcq(void) {
+    Conversion conv;
+    TriAcq triak;
+    startConv();
+    wait_EOC();
+    conv = readConv();
+    if(conv.channel == 0) {triak.angle = conv.value;}
+    if(conv.channel == 1) {triak.position = conv.value;}
+    if(conv.channel == 2) {triak.consigne = conv.value;}
+    startConv();
+    wait_EOC();
+    conv = readConv();
+    if(conv.channel == 0) {triak.angle = conv.value;}
+    if(conv.channel == 1) {triak.position = conv.value;}
+    if(conv.channel == 2) {triak.consigne = conv.value;}
+    startConv();
+    wait_EOC();
+    conv = readConv();
+    if(conv.channel == 0) {triak.angle = conv.value;}
+    if(conv.channel == 1) {triak.position = conv.value;}
+    if(conv.channel == 2) {triak.consigne = conv.value;}
+    return triak;
+}
+
+
 
 module_init(pcm_start);
 module_exit(pcm_stop);
 
 /* Exports */
 EXPORT_SYMBOL(doubleAcq);
+EXPORT_SYMBOL(tripleAcq);

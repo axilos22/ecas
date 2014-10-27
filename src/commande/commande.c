@@ -1,4 +1,11 @@
+/**********************************************************/
+/* Code for stabilizing the pendulum             		  */
+/* version  : RTAI 3.4 -                                  */
+/* Authors  : ARRACHIDI - JEANNE - TRAN                   */
+/* Date		: 24/10/2014				                  */
+/**********************************************************/
 #include "commande.h"
+
 /* arcom 22 
 gauche max : 2872
 droite max : 1275
@@ -16,6 +23,8 @@ double y1_pos_m = 0.0;
 double y1_pos_V = 0.0;
 double y2_theta_rad = 0.0;
 double y2_theta_V = 0.0;
+double y3_consigne_m = 0.0;
+double y3_consigne_V = 0.0;
 
 double x1chap= 0.0;
 double x2chap= 0.0;
@@ -32,7 +41,7 @@ u16 commande_ajile = 2048;
 int coeff_precision = 5;
 int coeff_reactivite = 2;
 
-u16 calcul(u16 pos_ajile, u16 theta_ajile) {
+u16 calcul(u16 pos_ajile, u16 theta_ajile, u16 consigne) {
 
 	y1_pos_V = ((pos_ajile-2048)/2048.0);
 	y1_pos_m = (y1_pos_V*.46*coeff_reactivite);
@@ -40,6 +49,11 @@ u16 calcul(u16 pos_ajile, u16 theta_ajile) {
 	y2_theta_V = (theta_ajile-2048)/2048.0;
 	y2_theta_rad = ((y2_theta_V*1.613)/coeff_precision);
 	
+	y3_consigne_V = ((consigne-2048)/2048.0);
+	y3_consigne_m =  y3_consigne_V*0.25;
+	
+	y1_pos_m = y1_pos_m + y3_consigne_m; 
+
 	/* ATTENTION: SECURITE A NE PAS SUPPRIMER */
 	if (((y2_theta_rad > 0.15)||(y2_theta_rad < -0.15))) {return 2048;}
 	if (((y1_pos_m > 0.40)||(y1_pos_m < -0.40))) {return 2048;}
@@ -66,12 +80,12 @@ u16 calcul(u16 pos_ajile, u16 theta_ajile) {
 }
 
 int start_com(void) {
-	printk("In module COMMANDE\n");
+	printk("Module COMMANDE started.\n");
 	return 0;
 }
 
 void stop_com(void) {
-	printk("out of module COMMANDE\n");
+	printk("Module COMMANDE stoped.\n");
 }
 
 module_init(start_com);

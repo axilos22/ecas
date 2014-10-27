@@ -458,6 +458,8 @@ deps_/home/rtai/ecas-master/src/pcm_3718/pcm_3718.o := \
     $(wildcard include/config/vt.h) \
   /usr/lib/arcom/realtime/include/rtai_sched.h \
   /usr/lib/arcom/realtime/include/rtai_fifos.h \
+  /usr/lib/arcom/realtime/include/rtai_sem.h \
+  /usr/lib/arcom/realtime/include/rtai_nam2num.h \
 
 /home/rtai/ecas-master/src/pcm_3718/pcm_3718.o: $(deps_/home/rtai/ecas-master/src/pcm_3718/pcm_3718.o)
 

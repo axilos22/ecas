@@ -1,1 +1,0 @@
-cmd_/home/rtai/Desktop/ecas_jeanne-arrachidi-tran/src/pc/pc.ko := ld -m elf_i386 -r -m elf_i386   -o /home/rtai/Desktop/ecas_jeanne-arrachidi-tran/src/pc/pc.ko /home/rtai/Desktop/ecas_jeanne-arrachidi-tran/src/pc/pc.o /home/rtai/Desktop/ecas_jeanne-arrachidi-tran/src/pc/pc.mod.o

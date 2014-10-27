@@ -35,6 +35,7 @@
 typedef struct {int id; int size;u8 data[8];} msg_CAN;
 
 void send_CAN(msg_CAN msg);
+void sendTriAcq(TriAcq aq);
 msg_CAN receive_CAN(void);
 void init_can(void);
 int isValid(msg_CAN msg);
@@ -43,6 +44,7 @@ void sendU16(u16 data, int id);
 void sendAcq(Acq aq);
 void sendCmd(u16 cmd);
 Acq canToAcq(msg_CAN msg);
+TriAcq canToTriAcq(msg_CAN msg);
 u16 canToCmd(msg_CAN msg);
 int isAcq(msg_CAN msg);
 void print(msg_CAN msg);

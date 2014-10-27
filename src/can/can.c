@@ -1,4 +1,20 @@
+/**********************************************************/
+/* Code for handling the CAN communications        		  */
+/* version  : RTAI 3.4 -                                  */
+/* Authors  : ARRACHIDI - JEANNE - TRAN                   */
+/* Date		: 24/10/2014				                  */
+/**********************************************************/
 #include	"can.h"
+
+int start(void) {	
+	printk("CAN module started.\n");
+	init_can();
+	return 0;
+}
+
+void stop(void) {
+	printk("CAN module stopped.\n");
+}
 
 void init_can(void) {
 	printk("Initialisation du CAN en cours\n");
@@ -10,14 +26,14 @@ void init_can(void) {
 	outb(0x1c,CAN_BTR1);
 	outb(0xFA,CAN_OCR);
 	#if SYN == 1
-		outb(0x05,CAN_IR);
+		outb(0x01,CAN_IR);
 		inb(CAN_IR); // ack interruption
 		outb(0x02,CAN_CONTROL);
 		printk("Initialisation terminee, interruptions activees.\n");
 	#else
 		outb(0x00,CAN_CONTROL);
-	#endif
-	printk("Initialisation terminee.\n");
+		printk("Initialisation terminee.\n");
+	#endif	
 }
 
 void send_CAN(msg_CAN msg) {
@@ -99,6 +115,9 @@ u8 identifier, rtr; int i;
 		}
 		printk("\n");
 		#endif
+		#if SYN ==  1
+			inb(CAN_IR);
+		#endif
         outb(0x04,CAN_COMMAND);
     }
     else {
@@ -141,16 +160,6 @@ unsigned int i = 0;
 	return i;
 }
 
-int start(void) {
-	init_can();
-	printk("CAN module loaded.\n");
-	return 0;
-}
-
-void stop(void) {
-	printk("CAN module stopped.\n");
-}
-
 /* Send aquisition over a CAN msg format :
 H_position	: data 3
 L_position	: data 2
@@ -169,12 +178,42 @@ void sendAcq(Acq aq) {
 	send_CAN(msg);
 }
 
+void sendTriAcq(TriAcq aq) {
+	msg_CAN msg;
+	msg.id = ID_ACQ;
+	msg.size = 6;
+	msg.data[5] = aq.consigne>>8;
+	msg.data[4] = aq.consigne&0x00FF;
+	msg.data[3] = aq.position>>8;
+	msg.data[2] = aq.position&0x00FF;
+	msg.data[1] = aq.angle>>8;
+	msg.data[0] = aq.angle&0x00FF;
+	send_CAN(msg);
+}
+
+
 void sendCmd(u16 cmd) {
 	sendU16(cmd,ID_CMD);
 }
 
 Acq canToAcq(msg_CAN msg) {
 	Acq aq;
+	aq.position = msg.data[3];
+	aq.position = aq.position<<8;
+	aq.position = aq.position+msg.data[2];
+
+	aq.angle = msg.data[1];
+	aq.angle = aq.angle<<8;
+	aq.angle = aq.angle+msg.data[0];
+	return aq;
+}
+
+TriAcq canToTriAcq(msg_CAN msg) {
+	TriAcq aq;
+	aq.consigne = msg.data[5];
+	aq.consigne = aq.consigne<<8;
+	aq.consigne = aq.consigne+msg.data[4];
+	
 	aq.position = msg.data[3];
 	aq.position = aq.position<<8;
 	aq.position = aq.position+msg.data[2];
@@ -230,4 +269,6 @@ EXPORT_SYMBOL(canToCmd);
 EXPORT_SYMBOL(isAcq);
 EXPORT_SYMBOL(isCmd);
 EXPORT_SYMBOL(print);
+EXPORT_SYMBOL(canToTriAcq);
+EXPORT_SYMBOL(sendTriAcq);
 

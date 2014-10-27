@@ -1,7 +1,5 @@
-/*
-* Spec : Max sampling rate: 100KHz
-sampling every 10µs
-*/
+/* Spec : Max sampling rate: 100KHz
+sampling every 10µs */
 /* required includes */
 #ifndef MAIN
 	 #include "../lib/rtai.h"
@@ -33,6 +31,7 @@ sampling every 10µs
 #define 	FIVE_VOLT_BIPOLAR		0x00
 #define 	FIVE_VOLT_UNIPOLAR		0x05
 
+#define		LAST_CHANNEL_TO_CHECK	2
 #ifndef VERBOSE
     #define VERBOSE 0
 #endif // VERBOSE
@@ -46,10 +45,18 @@ struct convertion {
 struct acq {
     u16 position;
     u16 angle;
+
 }; typedef struct acq Acq;
+
+struct triacq {
+    u16 position;
+    u16 angle;
+    u16 consigne; 
+}; typedef struct triacq TriAcq;
 
 /* Prototypes */
 Acq	 	doubleAcq(void);
+TriAcq  tripleAcq(void);
 int	    init3718(void);
 void    setChannel(int channel);
 void    setChannelScan(int startChan, int stopChan);

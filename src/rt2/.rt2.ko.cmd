@@ -1,1 +1,0 @@
-cmd_/home/rtai/ecas-asyn_pend/src/rt2/rt2.ko := i386-linux-ld -m elf_i386 -m elf_i386 -r -o /home/rtai/ecas-asyn_pend/src/rt2/rt2.ko /home/rtai/ecas-asyn_pend/src/rt2/rt2.o /home/rtai/ecas-asyn_pend/src/rt2/rt2.mod.o

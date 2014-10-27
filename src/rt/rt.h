@@ -28,10 +28,9 @@
 #define PRIORITE_MAX 0
 #define USE_FLOAT 1
 
-#define num_irq	7
+#define num_irq	5
 
 /* Declaration de taches */
 static RT_TASK t_aq;
-/*static SEM sema;*/
 
 /* Utiliser les float RT TAST INIT*/

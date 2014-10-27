@@ -1,20 +1,26 @@
+/**********************************************************/
+/* Code for handling different real time tasks     		  */
+/* version  : RTAI 3.4 -                                  */
+/* Authors  : ARRACHIDI - JEANNE - TRAN                   */
+/* Date		: 24/10/2014				                  */
+/**********************************************************/
 #include "rt.h"
 
 /*t aq = 32µs */
 void aq(long arg) {
-	//RTIME temps;
-	Acq aq;
-	int boucle = 0; 	
-	
-	while (boucle<100){
-		//temps = rt_get_time_ns();
+	RTIME temps;
+	TriAcq aq;
+	int boucle=0; 
+	while (1){
+		temps = rt_get_time_ns();
 		//rt_sem_wait(&sema);
-		aq =doubleAcq();
-		printk("[%d]aqLocales\tpos=%d\tangle=%d\n",boucle,aq.position,aq.angle);
-		sendAcq(aq);
-		boucle++;
+		aq =tripleAcq();
+		//printk("%llu;%d;%d\n",temps*1000000000,aq.position,aq.angle);
+		//printk("consigne:%d\n", aq.consigne);
+		sendTriAcq(aq);
 		//temps = rt_get_time_ns() - temps;
 		//printk("tps exec: %llu",temps);
+		boucle++;
 		rt_task_wait_period();	
 	}
 }
@@ -22,18 +28,18 @@ void aq(long arg) {
 void interuption(void) {
 	msg_CAN msg;
 	u16 commande;
-	Acq aq;
+	TriAcq aq;
+	
 	msg = receive_CAN();
 	if(isAcq(msg)) {
-		aq = canToAcq(msg);		
-		printk("INT\tpos=%d\tangle=%d\n",aq.position,aq.angle);
-		sendCmd(calcul(aq.position, aq.angle));		
+		aq = canToTriAcq(msg);		
+		//printk("INT\tpos=%d\tangle=%d\n",aq.position,aq.angle);
+		sendCmd(calcul(aq.position, aq.angle, aq.consigne));		
 	}		
 	if(isCmd(msg)) {
 		commande = canToCmd(msg);
-		printk("INT\tcmd = %d\n",commande);	
-		setValue(commande,0);
-		/*rt_sem_signal(&sema);*/
+		//printk("INT\tcmd = %d\n",commande);	
+		setValue(commande,0);		
 	}	
 	rt_ack_irq(num_irq); /* acquittement de l'interruption */
 }
@@ -47,7 +53,6 @@ int rt_start(void) {
 	start_rt_timer(nano2count(TICK_PERIOD));
 	now = rt_get_time();
 	rt_task_make_periodic(&t_aq, now, nano2count(PERIODE));
-	//rt_sem_init(&sema,1);
 	
 	rt_global_cli(); /* desactivation des IT */
 	rt_request_global_irq(num_irq,interuption); /*installation du handler */

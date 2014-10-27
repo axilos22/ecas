@@ -1,9 +1,9 @@
-cmd_/home/rtai/ecas-asyn_pend/src/can/can.o :=  i386-linux-gcc -m32 -Wp,-MD,/home/rtai/ecas-asyn_pend/src/can/.can.o.d  -nostdinc -isystem /usr/lib/arcom/bin/../lib/gcc/i386-linux/3.4.4/include -D__KERNEL__ -Iinclude  -include include/linux/autoconf.h -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -ffreestanding -Os     -fomit-frame-pointer -pipe -msoft-float -mpreferred-stack-boundary=2 -fno-unit-at-a-time  -Iinclude/asm-i386/mach-default -Wdeclaration-after-statement  -I/usr/lib/arcom/realtime/include -Wall -ffast-math -mhard-float  -DMODULE -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(can)"  -D"KBUILD_MODNAME=KBUILD_STR(can)" -c -o /home/rtai/ecas-asyn_pend/src/can/can.o /home/rtai/ecas-asyn_pend/src/can/can.c
+cmd_/home/rtai/ecas-master/src/can/can.o :=  i386-linux-gcc -m32 -Wp,-MD,/home/rtai/ecas-master/src/can/.can.o.d  -nostdinc -isystem /usr/lib/arcom/bin/../lib/gcc/i386-linux/3.4.4/include -D__KERNEL__ -Iinclude  -include include/linux/autoconf.h -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -ffreestanding -Os     -fomit-frame-pointer -pipe -msoft-float -mpreferred-stack-boundary=2 -fno-unit-at-a-time  -Iinclude/asm-i386/mach-default -Wdeclaration-after-statement  -I/usr/lib/arcom/realtime/include -Wall -ffast-math -mhard-float  -DMODULE -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(can)"  -D"KBUILD_MODNAME=KBUILD_STR(can)" -c -o /home/rtai/ecas-master/src/can/can.o /home/rtai/ecas-master/src/can/can.c
 
-deps_/home/rtai/ecas-asyn_pend/src/can/can.o := \
-  /home/rtai/ecas-asyn_pend/src/can/can.c \
-  /home/rtai/ecas-asyn_pend/src/can/can.h \
-  /home/rtai/ecas-asyn_pend/src/can/../lib/rtai.h \
+deps_/home/rtai/ecas-master/src/can/can.o := \
+  /home/rtai/ecas-master/src/can/can.c \
+  /home/rtai/ecas-master/src/can/can.h \
+  /home/rtai/ecas-master/src/can/../lib/rtai.h \
   include/linux/init.h \
     $(wildcard include/config/modules.h) \
     $(wildcard include/config/hotplug.h) \
@@ -458,8 +458,10 @@ deps_/home/rtai/ecas-asyn_pend/src/can/can.o := \
     $(wildcard include/config/vt.h) \
   /usr/lib/arcom/realtime/include/rtai_sched.h \
   /usr/lib/arcom/realtime/include/rtai_fifos.h \
-  /home/rtai/ecas-asyn_pend/src/can/../pcm_3718/pcm_3718.h \
+  /usr/lib/arcom/realtime/include/rtai_sem.h \
+  /usr/lib/arcom/realtime/include/rtai_nam2num.h \
+  /home/rtai/ecas-master/src/can/../pcm_3718/pcm_3718.h \
 
-/home/rtai/ecas-asyn_pend/src/can/can.o: $(deps_/home/rtai/ecas-asyn_pend/src/can/can.o)
+/home/rtai/ecas-master/src/can/can.o: $(deps_/home/rtai/ecas-master/src/can/can.o)
 
-$(deps_/home/rtai/ecas-asyn_pend/src/can/can.o):
+$(deps_/home/rtai/ecas-master/src/can/can.o):
