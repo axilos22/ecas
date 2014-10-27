@@ -40,6 +40,8 @@ double commande= 0.0;
 u16 commande_ajile = 2048;
 int coeff_precision = 5;
 int coeff_reactivite = 2;
+//int coeff_precision = 5.9;
+//int coeff_reactivite = 2.6;
 
 u16 calcul(u16 pos_ajile, u16 theta_ajile, u16 consigne) {
 

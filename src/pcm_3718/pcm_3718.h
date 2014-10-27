@@ -62,7 +62,7 @@ void    setChannel(int channel);
 void    setChannelScan(int startChan, int stopChan);
 void    ADRangeSelect(int channel, int range);
 void    startConv(void);
-int		testOneChannel(int channel);
+u16		testOneChannel(int channel);
 void 	checkSR(u8 sr);
 u16     readAD(void);
 Conversion readConv(void);

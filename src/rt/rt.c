@@ -5,21 +5,21 @@
 /* Date		: 24/10/2014				                  */
 /**********************************************************/
 #include "rt.h"
+RTIME temps;
 
 /*t aq = 32µs */
-void aq(long arg) {
-	RTIME temps;
+void aq(long arg) {	
+	RTIME local_time;
 	TriAcq aq;
 	int boucle=0; 
 	while (1){
 		temps = rt_get_time_ns();
-		//rt_sem_wait(&sema);
+		local_time = rt_get_time_ns();
 		aq =tripleAcq();
-		//printk("%llu;%d;%d\n",temps*1000000000,aq.position,aq.angle);
-		//printk("consigne:%d\n", aq.consigne);
+		#if VERBOSE > 1
+			printk("%llu\tx:%d\tth:%d\tcs:%d\n",local_time,aq.position,aq.angle,aq.consigne);
+		#endif
 		sendTriAcq(aq);
-		//temps = rt_get_time_ns() - temps;
-		//printk("tps exec: %llu",temps);
 		boucle++;
 		rt_task_wait_period();	
 	}
@@ -32,14 +32,20 @@ void interuption(void) {
 	
 	msg = receive_CAN();
 	if(isAcq(msg)) {
-		aq = canToTriAcq(msg);		
-		//printk("INT\tpos=%d\tangle=%d\n",aq.position,aq.angle);
+		aq = canToTriAcq(msg);	
+		#if VERBOSE > 1	
+			printk("INT\tpos=%d\tangle=%d\n",aq.position,aq.angle);
+		#endif
 		sendCmd(calcul(aq.position, aq.angle, aq.consigne));		
 	}		
 	if(isCmd(msg)) {
 		commande = canToCmd(msg);
-		//printk("INT\tcmd = %d\n",commande);	
-		setValue(commande,0);		
+		#if VERBOSE > 1	
+			printk("INT\tcmd = %d\n",commande);	
+		#endif
+		setValue(commande,0);
+		temps = rt_get_time_ns() - temps;
+		printk("RTT:%llu\n",temps);
 	}	
 	rt_ack_irq(num_irq); /* acquittement de l'interruption */
 }
